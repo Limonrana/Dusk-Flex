@@ -1,0 +1,8 @@
+MatchingTranslations:
+  enabled: false
+TemplateLength:
+  enabled: false
+  ignore:
+    - package.json
+    - webpack.config.js
+    - package-lock.json
