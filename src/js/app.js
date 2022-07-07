@@ -1,0 +1,1 @@
+console.log('My shopify theme 2.0 is running');

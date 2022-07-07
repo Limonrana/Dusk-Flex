@@ -1,0 +1,9 @@
+{
+  "name": "Home Page",
+  "sections": {
+    "main": {
+      "type": "main"
+    }
+  },
+  "order": ["main"]
+}
