@@ -1,0 +1,319 @@
+{%- comment -%}
+--------------------------------------------------------------------------------------------------------------------
+HEADER CONTENT START
+--------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+<header class="ws--header ws--header-inline ws--header-initialized ws--header-transparent-disable">
+
+    {%- comment -%} ========== HEADER CONTENT VARIABLES AND SOME CALCULATION START =========== {%- endcomment -%}
+        {%- assign main_menu_handle = section.settings.navigation_menu | default: 'main-menu' -%}
+        {%- assign main_menu = linklists[main_menu_handle] -%}
+    {%- comment -%} ========== HEADER CONTENT VARIABLES AND SOME CALCULATION END =========== {%- endcomment -%}
+
+    <div class="ws--header-wrapper">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <div class="ws--header-flex-item ws--header-flex-item-fill">
+                <nav class="ws--header-nav">
+                    <ul class="ws--horizontal-list">
+                        {%- for link in main_menu.links -%}
+                            <li class="ws--horizontal-list-item {% if link.links == blank and link.active %}is-active{% endif %}">
+                                <a class="nav-link ws--heading ws--h5 ws--heading-uppercase" href="{{ link.url }}">
+                                    {{- link.title | escape -}} <span class="ws--header-link-spacer">{{ link.title | escape }}</span>
+                                </a>
+                            </li>
+                        {%- endfor -%}
+                      </ul>
+                </nav>
+            </div>
+
+            {%- comment -%} ========== HEADER LOGO CALCULATION START =========== {%- endcomment -%}
+                {%- capture header_logo -%}
+                    <a href="{{ routes.root_url }}" class="ws--header-logo-link">
+                        {%- if section.settings.logo != blank -%}
+                            {%- capture image_size -%}{{ section.settings.logo_max_width }}x{%- endcapture -%}
+
+                            <img class="ws--header-logo-image ws--header-logo-image-primary"
+                                src="{{ section.settings.logo | img_url: image_size }}"
+                                srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                                width="{{ section.settings.logo_max_width }}"
+                                alt="{{ section.settings.logo.alt | default: shop.name | escape }}">
+
+                            {%- if use_transparent_header and section.settings.transparent_logo != blank -%}
+                                <img class="ws--header-logo-image ws--header-logo-image-transparent"
+                                    src="{{ section.settings.transparent_logo | img_url: image_size }}"
+                                    srcset="{{ section.settings.transparent_logo | img_url: image_size }} 1x, {{ section.settings.transparent_logo | img_url: image_size, scale: 2 }} 2x"
+                                    width="{{ section.settings.logo_max_width }}"
+                                    alt="{{ section.settings.transparent_logo.alt | default: shop.name | escape }}">
+                            {%- endif -%}
+                        {%- else -%}
+                            <span class="ws--heading ws--h1 ws--heading-uppercase">{{ shop.name }}</span>
+                        {%- endif -%}
+                    </a>
+                {%- endcapture -%}
+            {%- comment -%} ========== HEADER LOGO CALCULATION END =========== {%- endcomment -%}
+
+            <div class="ws--header-flex-item ws--header-flex-item-logo">
+                <div class="ws--header-logo">{{ header_logo }}</div>
+            </div>
+
+            <div class="ws--header-flex-item ws--header-flex-item-fill">
+                {%- unless section.settings.show_icons -%}
+                    <nav class="ws--header-nav ws--header-secondary-nav">
+                        <ul class="ws--horizontal-list">
+                            {%- if shop.customer_accounts_enabled -%}
+                                <li class="ws--horizontal-list-item">
+                                <a href="{{ routes.account_url }}" class="nav-link ws--heading ws--h6 ws--heading-uppercase">
+                                    {{- 'header.navigation.account' | t -}}
+                                </a>
+                                </li>
+                            {%- endif -%}
+                            <li class="ws--horizontal-list-item">
+                                <a href="{{ routes.search_url }}" class="nav-link ws--heading ws--h6 ws--heading-uppercase">Search</a>
+                            </li>
+            
+                            <li class="ws--horizontal-list-item">
+                                <a href="{{ routes.cart_url }}" class="nav-link ws--heading ws--h4 ws--heading-uppercase">
+                                    Cart (<span class="Header__CartCount">0</span>)
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                {%- endunless -%}
+
+                {%- if shop.customer_accounts_enabled and section.settings.show_icons or use_sidebar_menu -%}
+                    <a href="{{ routes.account_url }}" class="ws--header-icon ws--icon-wrapper ws--icon-wrapper-clickable ws--hidden-phone">
+                      {%- render 'icon' with 'account' -%}
+                    </a>
+                {%- endif -%}
+                <a href="{{ routes.search_url }}" class="ws--header-icon ws--icon-wrapper ws--icon-wrapper-clickable {% unless section.settings.show_icons %}ws--hidden-desktop{% endunless %}">
+                    <span class="ws--hidden-tablet-and-up">
+                        {%- render 'icon' with 'search' -%}
+                    </span>
+                    <span class="ws--hidden-phone">
+                        {%- render 'icon' with 'search-desktop' -%}
+                    </span>
+                </a>
+                <a href="{{ routes.cart_url }}" class="ws--header-icon ws--icon-wrapper ws--icon-wrapper-clickable {% unless section.settings.show_icons %}ws--hidden-desktop{% endunless %}">
+                    <span class="ws--hidden-tablet-and-up">
+                        {%- render 'icon' with 'cart' -%}
+                    </span>
+                    <span class="ws--hidden-phone">
+                        {%- render 'icon' with 'cart-desktop' -%}
+                    </span>
+                    <span class="ws--header-cart-dot {% if cart.item_count > 0 %}is-visible{% endif %}"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "shopify-section--header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_sticky_header",
+      "label": "Use sticky header",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Image",
+      "info": "200 x 60px .png recommended"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 350,
+      "step": 5,
+      "unit": "px",
+      "label": "Image width",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_max_width",
+      "min": 50,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile image width",
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Currency selector",
+      "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "Show currency selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "navigation_menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "navigation_style",
+      "label": "Navigation style",
+      "info": "Setting will default to center style if screen width cannot fit all the links.",
+      "options": [
+        {
+          "value": "sidebar",
+          "label": "Sidebar"
+        },
+        {
+          "value": "inline",
+          "label": "Inline"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "logoLeft",
+          "label": "Logo left"
+        }
+      ],
+      "default": "inline"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icons",
+      "label": "Show icons",
+      "info": "Text for account, search and cart are replaced by icons on desktop.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Transparent header"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header",
+      "label": "Enable on homepage",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header_collection",
+      "label": "Enable on collection pages",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_transparent_header_border",
+      "label": "Show separation border",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "transparent_text_color",
+      "label": "Text/icon color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "transparent_logo",
+      "label": "Logo image",
+      "info": "200 x 60px .png recommended"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "navigation_mega_menu",
+          "label": "Menu item",
+          "info": "Enter menu item to apply a mega menu dropdown. [Learn more](http://support.maestrooo.com/article/149-navigation-enabling-and-configuring-mega-menu)."
+        },
+        {
+          "type": "header",
+          "content": "Image push 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "push_1_image",
+          "label": "Image",
+          "info": "740 x 460 px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "push_1_heading",
+          "label": "Heading",
+          "default": "Example heading"
+        },
+        {
+          "type": "text",
+          "id": "push_1_subheading",
+          "label": "Sub-heading",
+          "default": "Example sub-heading"
+        },
+        {
+          "type": "url",
+          "id": "push_1_url",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Image push 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "push_2_image",
+          "label": "Image",
+          "info": "740 x 460 px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "push_2_heading",
+          "label": "Heading",
+          "default": "Example heading"
+        },
+        {
+          "type": "text",
+          "id": "push_2_subheading",
+          "label": "Sub-heading",
+          "default": "Example sub-heading"
+        },
+        {
+          "type": "url",
+          "id": "push_2_url",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
