@@ -6,3 +6,9 @@ TemplateLength:
     - package.json
     - webpack.config.js
     - package-lock.json
+LiquidTag:
+  enabled: true
+  min_consecutive_statements: 50
+
+ImgWidthAndHeight:
+  enabled: false

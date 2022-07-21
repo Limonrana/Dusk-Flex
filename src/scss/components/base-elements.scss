@@ -1,0 +1,208 @@
+/*------------------------------------
+ *   Base CSS Start for all elements
+ *------------------------------------*/
+.ws--container {
+  padding: 0 70px !important;
+}
+
+.ws--heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  color: rgb(var(--color-foreground));
+  transition: color 0.2s ease-in-out;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.ws--h1 {
+  font-size: calc(var(--font-heading-scale) * 2.5rem);
+}
+.ws--h2 {
+  font-size: calc(var(--font-heading-scale) * 2rem);
+}
+.ws--h3 {
+  font-size: calc(var(--font-heading-scale) * 1.8rem);
+}
+.ws--h4 {
+  font-size: calc(var(--font-heading-scale) * 1.5rem);
+}
+.ws--h5 {
+  font-size: calc(var(--font-heading-scale) * 1.4rem);
+}
+.ws--h5 {
+  font-size: calc(var(--font-heading-scale) * 1.3rem);
+}
+.ws--h6 {
+  font-size: calc(var(--font-heading-scale) * 1.2rem);
+}
+.ws--h7 {
+  font-size: calc(var(--font-heading-scale) * 1.1rem);
+}
+
+.ws--heading-uppercase {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+// Image And SVG Elements CSS
+.ws--placeholder-background-svg {
+  height: 100% !important;
+  width: auto !important;
+  min-width: 100%;
+}
+.ws--placeholder-svg-dark {
+  background: dimgray;
+  fill: #a1a1a1;
+}
+
+// Text elements (paragraphs, headings, etc.)
+.ws--text {
+  color: #6a6a6a;
+  transition: color 0.2s ease-in-out;
+}
+
+.ws--icon {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  fill: currentColor;
+  vertical-align: middle;
+  stroke-width: 1px;
+  background: none;
+  pointer-events: none;
+}
+
+.ws--page-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+  background: #363636;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  &.is-ws-visible {
+    opacity: 0.5;
+    visibility: visible;
+  }
+}
+
+// Responsive Breakpoints
+.ws--hidden-phone {
+  @include devices(phone) {
+    display: none !important;
+  }
+}
+.ws--hidden-tablet {
+  @include devices(tablet) {
+    display: none !important;
+  }
+}
+.ws--hidden-tablet-and-up {
+  @include devices(tabletUp) {
+    display: none !important;
+  }
+}
+.ws--hidden-pocket {
+  @include devices(pocket) {
+    display: none !important;
+  }
+}
+.ws--hidden-laptop {
+  @include devices(laptop) {
+    display: none !important;
+  }
+}
+.ws--hidden-laptop-and-up {
+  @include devices(laptopUp) {
+    display: none !important;
+  }
+}
+.ws--hidden-desktop {
+  @include devices(desktop) {
+    display: none !important;
+  }
+}
+.ws--hidden-widescreen {
+  @include devices(widescreen) {
+    display: none !important;
+  }
+}
+
+// Button elements (buttons, a etc.)
+a:hover {
+  color: initial;
+}
+.ws--btn {
+  background-color: transparent;
+  border-color: #1c1b1b;
+  position: relative;
+  display: inline-block;
+  padding: 12px 28px;
+  line-height: normal;
+  border: 1px solid transparent;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0.2em;
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  transition: color 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86),
+    border 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  z-index: 1;
+  -webkit-tap-highlight-color: initial;
+}
+.ws--btn-primary {
+  border-color: #1c1b1b;
+  color: #ffffff;
+}
+.ws--btn-primary::before {
+  background-color: #1c1b1b;
+}
+
+.ws--btn::before {
+  position: absolute;
+  content: "";
+  display: block;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  transform-origin: left center;
+  z-index: -1;
+}
+
+@media (-moz-touch-enabled: 0), (hover: hover) {
+  .ws--btn::before {
+    transition: transform 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  }
+  .ws--btn-primary:not([disabled]):hover {
+    color: #1c1b1b;
+    background-color: transparent;
+  }
+  .ws--btn:hover::before {
+    transform-origin: right center;
+    transform: scale(0, 1);
+  }
+}
+
+// Nav Tab CSS
+.ws--nav-tab-link {
+  color: #1c1b1b !important;
+  padding: 0 !important;
+  &.active {
+    border-bottom: 1px solid #1c1b1b !important;
+  }
+}
+
+// Card elements (cards, card-groups etc.)
+.card {
+  border: none !important;
+}

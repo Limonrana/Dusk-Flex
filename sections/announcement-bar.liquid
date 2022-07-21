@@ -20,6 +20,9 @@
           color: {{ section.settings.text_color }};
         }
       </style>
+      <script>
+        document.documentElement.style.setProperty('--announcement-bar-height', document.getElementById('ws--section-announcement-bar').offsetHeight + 'px');
+      </script>
   {%- endunless -%}
 {%- endif -%}
 

@@ -40,14 +40,20 @@
       <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
 
-    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      document.documentElement.style.setProperty('--window-height', window.innerHeight + 'px');
     if (Shopify.designMode) {
       document.documentElement.classList.add('shopify-design-mode');
     }
     </script>
+    <script src="{{ 'global.js' | asset_url }}" defer></script>
+    <script src="{{ 'app.js' | asset_url }}" defer></script>
   </head>
 
   <body class="gradient">
+    <div class="ws--page-overlay"></div>
+    {% section 'sidebar-menu' %}
     {% section 'announcement-bar' %}
     {% section 'header' %}
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">

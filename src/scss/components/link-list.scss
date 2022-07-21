@@ -1,0 +1,71 @@
+/**
+ * ----------------------------------------------------------------------------
+ * Link List CSS Starts here
+ * ----------------------------------------------------------------------------
+ */
+
+.ws--link-list {
+  list-style: none;
+  padding: 0;
+  .ws--link-list-item {
+    position: relative;
+    display: block;
+    margin-bottom: 12px;
+    width: 100%;
+    line-height: 1.5;
+    text-align: left;
+    transition: all 0.2s ease-in-out;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &::before {
+      position: absolute;
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      top: calc(50% - 3px);
+      left: 0;
+      border-radius: 100%;
+      background: var(--text-color);
+      opacity: 0;
+      transition: opacity 0.1s ease-in-out;
+    }
+    .ws--link {
+      display: block;
+      width: 100%;
+      text-align: inherit;
+      font-size: 14px;
+      &.ws--link-secondary {
+        color: #1c1b1b !important;
+        &:hover {
+          color: #6a6a6a !important;
+        }
+      }
+    }
+    &.is-selected {
+      padding-left: 18px;
+      &::before {
+        opacity: 1;
+        transition-delay: 0.1s;
+      }
+    }
+  }
+  .ws--link-list-bordered {
+    margin-left: 8px;
+    padding: 0 20px 0 25px;
+    border-left: 1px solid #dddddd;
+    &li {
+      &:first-child {
+        .ws--link-list-item {
+          margin-top: 2px;
+        }
+      }
+      &:last-child {
+        .ws--link-list-item {
+          margin-bottom: 2px;
+        }
+      }
+    }
+  }
+}

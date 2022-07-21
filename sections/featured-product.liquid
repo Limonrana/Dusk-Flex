@@ -1,0 +1,238 @@
+{%- assign product = all_products[section.settings.product] -%}
+
+{%- capture section_settings -%}
+{
+  "enableHistoryState": false,
+  "usePlaceholder": {% if product == empty %}true{% else %}false{% endif %},
+  "templateSuffix": {{ product.template_suffix | json }},
+  "showInventoryQuantity": {{ section.settings.show_inventory_quantity | json }},
+  "showSku": {{ section.settings.show_sku | json }},
+  "inventoryQuantityThreshold": {{ section.settings.inventory_quantity_threshold }},
+  "showPriceInButton": {{ section.settings.show_price_in_button | json }},
+  "showPaymentButton": {{ section.settings.show_payment_button | json }},
+  "useAjaxCart": {% if settings.cart_type == 'drawer' %}true{% else %}false{% endif %}
+}
+{%- endcapture -%}
+
+<section class="Section Section--spacingNormal" data-section-id="{{ section.id }}" data-section-type="featured-product" data-section-settings='{{ section_settings }}'>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Heading -->
+                <h2 class="mb-10 text-center">Top Item of the Week</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row align-items-center py-6 px-md-4 bg-white shadow">
+                    <div class="col-12 col-md-6">
+                        <!-- Card -->
+                        <div class="card">
+                            <!-- Badge -->
+                            <div class="badge bg-primary card-badge text-uppercase">
+                                Sale
+                            </div>
+                            <!-- Slider -->
+                            <div class="card-img-top mb-4">
+                                {{- 'product-1' | placeholder_svg_tag -}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <!-- Header -->
+                        <div class="row mb-1">
+                            <div class="col">
+                                <a class="text-muted" href="shop.html">Sneakers</a>
+                            </div>
+                        </div>
+                        <h3 class="mb-2">Leather Sneakers</h3>
+                        <div class="mb-7">
+                            <span class="fs-lg fw-bold text-gray-350 text-decoration-line-through">$115.00</span> 
+                            <span class="ms-1 fs-5 fw-bolder text-primary">$85.00</span>
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <!-- Label -->
+                                <p class="mb-5">Color: <strong id="colorCaption">White</strong></p>
+                                <div class="mb-8 ms-n1">
+                                    <div class="form-check form-check-inline form-check-img">
+                                        <input checked class="form-check-input" data-target="#colorCaption" data-toggle="form-caption" id="imgRadioOne" name="imgRadio" style="background-image: url(assets/img/products/product-7.jpg);" type="radio" value="White">
+                                    </div>
+                                    <div class="form-check form-check-inline form-check-img">
+                                        <input class="form-check-input" data-target="#colorCaption" data-toggle="form-caption" id="imgRadioTwo" name="imgRadio" style="background-image: url(assets/img/products/product-49.jpg);" type="radio" value="Black">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- Label -->
+                                <p class="mb-5">Size: <strong><span id="sizeCaption">7.5</span> US</strong></p>
+                                <div class="mb-2">
+                                    <div class="form-check form-check-inline form-check-size mb-2">
+                                        <input class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" id="sizeRadioOne" name="sizeRadio" type="radio" value="6"> <label class="form-check-label" for="sizeRadioOne">6</label>
+                                    </div>
+                                    <div class="form-check form-check-inline form-check-size mb-2">
+                                        <input class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" disabled id="sizeRadioTwo" name="sizeRadio" type="radio" value="6.5"> <label class="form-check-label" for="sizeRadioTwo">6.5</label>
+                                    </div>
+                                    <div class="form-check form-check-inline form-check-size mb-2">
+                                        <input class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" id="sizeRadioThree" name="sizeRadio" type="radio" value="7"> <label class="form-check-label" for="sizeRadioThree">7</label>
+                                    </div>
+                                    <div class="form-check form-check-inline form-check-size mb-2">
+                                        <input checked class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" id="sizeRadioFour" name="sizeRadio" type="radio" value="7.5"> <label class="form-check-label" for="sizeRadioFour">7.5</label>
+                                    </div>
+                                </div><!-- Size chart -->
+                                <p class="mb-8"><img alt="..." class="img-fluid" src="assets/img/icons/icon-ruler.svg"> <a class="text-reset text-decoration-underline ms-3" data-bs-toggle="modal" href="#modalSizeChart">Size chart</a></p>
+                                <div class="row gx-5 mb-7">
+                                    <div class="col-12 col-lg-auto">
+                                        <!-- Quantity -->
+                                        <select class="form-select mb-2">
+                                            <option selected value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg">
+                                        <!-- Add to Cart -->
+                                         <button class="btn w-100 btn-dark mb-2" type="submit">Add to Cart</button>
+                                    </div>
+                                    <div class="col-12 col-lg-auto">
+                                        <!-- Buy Now -->
+                                         <button class="btn btn-outline-dark w-100 mb-2" data-toggle="button">Buy Now</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "class": "shopify-section--bordered",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub-heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_headings_on_mobile",
+      "label": "Show headings on mobile",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "label": "Show SKU",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "description_below_add_to_cart",
+      "label": "Description below add to cart",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "selector_mode",
+      "label": "Selector type",
+      "options": [
+        {
+          "value": "block",
+          "label": "Block"
+        },
+        {
+          "value": "dropdown",
+          "label": "Dropdown"
+        }
+      ],
+      "default": "dropdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_swatch",
+      "label": "Show color swatch",
+      "info": "Some colors appear white? Try disabling this option.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_carousel",
+      "label": "Show color carousel",
+      "info": "A pop-up selector with variant images for choosing colors. Only enables when color swatch is disabled.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity_selector",
+      "label": "Show quantity selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_inventory_quantity",
+      "label": "Show inventory quantity",
+      "info": "Make sure that your inventory is tracked. [Learn more](https://help.shopify.com/manual/products/inventory#set-up-inventory-tracking).",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "inventory_quantity_threshold",
+      "label": "Inventory quantity threshold",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "info": "Only show inventory quantity if below threshold. Choose 0 to always show.",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_in_button",
+      "label": "Show price in add to cart button",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_button",
+      "label": "Show dynamic checkout button",
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "category": "Product",
+      "name": "Featured product"
+    }
+  ]
+}
+{% endschema %}

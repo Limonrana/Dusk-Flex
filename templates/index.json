@@ -1,9 +1,9 @@
 {
   "name": "Home Page",
   "sections": {
-    "main": {
-      "type": "main"
+    "slideshow": {
+      "type": "slideshow"
     }
   },
-  "order": ["main"]
+  "order": ["slideshow"]
 }
