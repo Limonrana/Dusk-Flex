@@ -3,13 +3,10 @@
 <a href="{{ block.settings.button_link | default: collection.url }}" {{ block.shopify_attributes }} class="col-lg-4 col-md-4 col-sm-6 col-12">
     {%- capture mobile_size -%}750x{% if collection_image.height >= 960 %}960{% else %}{{ collection_image.height }}{% endif %}{%- endcapture -%}
     {%- assign image_crop = block.settings.image_alignment | split: ' ' | last -%}
-    <div class="card ws--collection-card ws--collection-card-item-wrapper-{{ section.settings.image_size }}" {% if collection_card_image %}style="background-image: url({{ collection_card_image | img_url: '1x1' }})"{% endif %}>
+    <div class="card ws--collection-card ws--collection-card-item-wrapper-{{ section.settings.image_size }}" {% if collection_card_image %}style="background-image: url({{ collection_card_image | image_url: '1x1' }})"{% endif %}>
         <div class="ws--collection-card-image-wrapper">
             <div class="ws--collection-card-image card-img {% if overlay %}ws--image-contrast{% endif %}" 
-                style="background-position: {{ block.settings.image_alignment }}"
-                data-src="{{ collection_card_image | img_url: mobile_size, crop: image_crop }}"
-                data-lazy-bg
-            >
+                {% if collection_card_image %}style="background-position: {{ block.settings.image_alignment }}" data-src="{{ collection_card_image | image_url: mobile_size, crop: image_crop }}" data-lazy-bg{% endif %}>
                 {%- if collection_card_image == nil -%}
                     {%- capture image_name -%}lifestyle-{% cycle 'anchor': '1', '2' %}{%- endcapture -%}
                     {{ image_name | placeholder_svg_tag: 'ws--placeholder-background-svg ws--placeholder-svg-dark' }}

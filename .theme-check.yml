@@ -12,3 +12,6 @@ LiquidTag:
 
 ImgWidthAndHeight:
   enabled: false
+
+UnusedSnippet:
+  enabled: true

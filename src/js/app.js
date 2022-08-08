@@ -110,6 +110,7 @@ document.querySelectorAll('[data-action="open-drawer"]').forEach(function(el) {
 // Lazy Load Images using Intersection Observer
 (function () {
 	var observer = new IntersectionObserver(onIntersect);
+    var observerBg = new IntersectionObserver(onIntersectBg);
 
     // Get all the images
 	document.querySelectorAll("[data-lazy]").forEach((img) => {
@@ -118,20 +119,38 @@ document.querySelectorAll('[data-action="open-drawer"]').forEach(function(el) {
 
     // Get all bg images
     document.querySelectorAll("[data-lazy-bg]").forEach((img) => {
-		observer.observe(img, true);
+		observerBg.observe(img);
 	});
 
-	function onIntersect(entries, bg = false) {
-		entries.forEach((entry) => {
-			if (entry.target.getAttribute("data-processed") || !entry.isIntersecting)
-				return true;
-
-            if (bg) {
+    // Intersection Observer Callback function For BG Images
+    function onIntersectBg(entries) {
+        entries.forEach((entry) => {
+			if (entry.target.getAttribute("data-processed") || !entry.isIntersecting) {
+                return true;
+            }
+            entry.target.classList.add('ws--image-lazy-loading');
+            if (entry.target.getAttribute("data-src")) {
                 entry.target.style.backgroundImage = "url(" + entry.target.getAttribute("data-src") + ")";
-            } else {
-                entry.target.setAttribute("src", entry.target.getAttribute("data-src"));
             }
 			entry.target.setAttribute("data-processed", true);
+            entry.target.classList.remove("ws--image-lazy-load");
+            entry.target.classList.remove("ws--image-lazy-loading");
+            entry.target.classList.add("ws--image-lazy-loaded");
+		});
+    }
+
+    // Intersection Observer Callback function For Images
+	function onIntersect(entries) {
+		entries.forEach((entry) => {
+			if (entry.target.getAttribute("data-processed") || !entry.isIntersecting) {
+                return true;
+            }
+            entry.target.classList.add('ws--image-lazy-loading');
+            entry.target.setAttribute("src", entry.target.getAttribute("data-src"));
+			entry.target.setAttribute("data-processed", true);
+            entry.target.classList.remove("ws--image-lazy-load");
+            entry.target.classList.remove("ws--image-lazy-loading");
+            entry.target.classList.add("ws--image-lazy-loaded");
 		});
 	}
 })();
@@ -191,3 +210,26 @@ function setHeightFlikityItems() {
         }
     });
 }
+
+// Quantity Incrementer and Decrementer
+document.querySelectorAll('[data-action="quantity-increment"]').forEach(function(el) {
+    // Get the decrementer element
+    let decrementer = el.querySelector('[data-action="decrement"]');
+    // Get the Incrementer element
+    let incrementer = el.querySelector('[data-action="increment"]');
+    // Get the input element
+    let input = el.querySelector('[data-action="quantity"]');
+    // Increment the value
+    incrementer.addEventListener('click', function(e) {
+        let value = parseInt(input.value);
+        input.value = value + 1;
+    });
+
+    // Decrement the value
+    decrementer.addEventListener('click', function(e) {
+        let value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    });
+});

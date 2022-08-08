@@ -111,28 +111,49 @@ document.querySelectorAll('[data-action="open-drawer"]').forEach(function (el) {
 }); // Lazy Load Images using Intersection Observer
 
 (function () {
-  var observer = new IntersectionObserver(onIntersect); // Get all the images
+  var observer = new IntersectionObserver(onIntersect);
+  var observerBg = new IntersectionObserver(onIntersectBg); // Get all the images
 
   document.querySelectorAll("[data-lazy]").forEach(function (img) {
     observer.observe(img);
   }); // Get all bg images
 
   document.querySelectorAll("[data-lazy-bg]").forEach(function (img) {
-    observer.observe(img, true);
-  });
+    observerBg.observe(img);
+  }); // Intersection Observer Callback function For BG Images
 
-  function onIntersect(entries) {
-    var bg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  function onIntersectBg(entries) {
     entries.forEach(function (entry) {
-      if (entry.target.getAttribute("data-processed") || !entry.isIntersecting) return true;
+      if (entry.target.getAttribute("data-processed") || !entry.isIntersecting) {
+        return true;
+      }
 
-      if (bg) {
+      entry.target.classList.add('ws--image-lazy-loading');
+
+      if (entry.target.getAttribute("data-src")) {
         entry.target.style.backgroundImage = "url(" + entry.target.getAttribute("data-src") + ")";
-      } else {
-        entry.target.setAttribute("src", entry.target.getAttribute("data-src"));
       }
 
       entry.target.setAttribute("data-processed", true);
+      entry.target.classList.remove("ws--image-lazy-load");
+      entry.target.classList.remove("ws--image-lazy-loading");
+      entry.target.classList.add("ws--image-lazy-loaded");
+    });
+  } // Intersection Observer Callback function For Images
+
+
+  function onIntersect(entries) {
+    entries.forEach(function (entry) {
+      if (entry.target.getAttribute("data-processed") || !entry.isIntersecting) {
+        return true;
+      }
+
+      entry.target.classList.add('ws--image-lazy-loading');
+      entry.target.setAttribute("src", entry.target.getAttribute("data-src"));
+      entry.target.setAttribute("data-processed", true);
+      entry.target.classList.remove("ws--image-lazy-load");
+      entry.target.classList.remove("ws--image-lazy-loading");
+      entry.target.classList.add("ws--image-lazy-loaded");
     });
   }
 })(); // // Recall the flickity slider when the window is resized
@@ -182,7 +203,30 @@ function setHeightFlikityItems() {
       getSilders[i].style.height = getSilders[i].offsetHeight + 'px';
     }
   });
-}
+} // Quantity Incrementer and Decrementer
+
+
+document.querySelectorAll('[data-action="quantity-increment"]').forEach(function (el) {
+  // Get the decrementer element
+  var decrementer = el.querySelector('[data-action="decrement"]'); // Get the Incrementer element
+
+  var incrementer = el.querySelector('[data-action="increment"]'); // Get the input element
+
+  var input = el.querySelector('[data-action="quantity"]'); // Increment the value
+
+  incrementer.addEventListener('click', function (e) {
+    var value = parseInt(input.value);
+    input.value = value + 1;
+  }); // Decrement the value
+
+  decrementer.addEventListener('click', function (e) {
+    var value = parseInt(input.value);
+
+    if (value > 1) {
+      input.value = value - 1;
+    }
+  });
+});
 
 /***/ }),
 

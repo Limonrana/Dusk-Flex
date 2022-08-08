@@ -7,7 +7,7 @@
 {%- endcapture -%}
 
 
-<section id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="slideshow" data-bs-spy="scroll" data-bs-target="#section-{{ section.id }}-end">
+<section id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="slideshow" data-bs-target="#section-{{ section.id }}-end">
   <div class="ws--slideshow-wrapper ws--slideshow-fullscreen">
     <div id="carouselSlideshow" class="carousel slide {% if section.settings.show_arrow %}ws--slideshow-carousel-with-scroll-btn{% endif %}" {% if section.settings.autoplay %}data-bs-ride="carousel"{% endif %}>
       <ol class="carousel-indicators">

@@ -1,0 +1,134 @@
+<section id="section-{{ section.id }}" class="newsletter-section">
+    {%- capture mobile_size -%}750x{% if section.settings.image.height >= 960 %}960{% else %}{{ section.settings.image.height }}{% endif %}{%- endcapture -%}
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="ws--hero-image {% if section.settings.section_size != 'normal' %}ws--hero-image-{{ section.settings.section_size }}{% endif %}" {% if section.settings.image %}style="background: url({{ section.settings.image | image_url }})"{% endif %}>
+            <div class="ws--hero-image-wrapper">
+                {%- unless section.settings.image != blank -%}
+                    <div class="ws--placeholder-background ws--placeholder-svg-dark">
+                      {{ 'lifestyle-1' | placeholder_svg_tag: 'ws--placeholder-background-svg' }}
+                    </div>
+                {%- endunless -%}
+            </div>
+            <!-- newsletter content -->
+            <div class="ws--hero-image-content-overlay">
+                <div class="newsletter-heading">
+                    {%- if section.settings.subheading != blank -%}
+                        <h3 class="ws--heading ws--h6">{{ section.settings.subheading | escape }}</h3>
+                    {%- endif -%}
+                    {%- if section.settings.title != blank -%}
+                        <h2 class="ws--heading ws--h1">{{ section.settings.title | escape }}</h2>
+                    {%- endif -%}
+                    {%- if section.settings.content != blank -%}
+                        <p class="ws--text">{{ section.settings.content }}</p>
+                    {%- endif -%}
+                </div>
+                <!-- newsletter form -->
+                {%- assign newsletter_form_id = 'footer-' | append: section.id -%}
+                <div class="newsletter-form">
+                    {%- form 'customer', id: newsletter_form_id, class: 'text-center' -%}
+                        <div class="d-flex">
+                            <input type="hidden" name="contact[tags]" value="newsletter">
+                            <input type="email" name="contact[email]" class="form-control" placeholder="{{ 'home_page.newsletter.input' | t }}" required>
+                            <button type="submit" class="ws--form-submit-btn ws--btn ws--btn-primary">{{ 'home_page.newsletter.submit' | t }}</button>
+                        </div>
+                    {%- endform -%}
+                </div>
+                <!-- newsletter form -->
+            </div>
+            <!-- newsletter content -->
+        </div>
+    </div>
+</section>
+
+<style>
+    #section-{{ section.id }},
+    #section-{{ section.id }} .ws--heading {
+      color: {{ section.settings.text_color }};
+    }
+  
+    #section-{{ section.id }} .ws--form-submit-btn {
+      border-color: {{ section.settings.text_color }};
+      color: {{ section.settings.button_color }};
+    }
+  
+    #section-{{ section.id }} .ws--form-submit-btn::before {
+      background-color: {{ section.settings.text_color }};
+    }
+  
+    @media (-moz-touch-enabled: 0), (hover: hover) {
+      #section-{{ section.id }} .ws--form-submit-btn:hover {
+        color: {{ section.settings.text_color }};
+      }
+    }
+  </style>
+  
+  {% schema %}
+  {
+    "name": "Newsletter",
+    "settings": [
+      {
+        "type": "select",
+        "id": "section_size",
+        "label": "Section size",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "normal",
+            "label": "Normal"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ],
+        "default": "small"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info": "1500 x 800px .jpg recommended"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "button_color",
+        "label": "Button text",
+        "default": "#000000"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub-heading",
+        "default": "Keep updated"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Newsletter"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Text",
+        "default": "<p>A short sentence describing what someone will receive by subscribing</p>"
+      }
+    ],
+    "presets": [
+      {
+        "category": "Promotional",
+        "name": "Newsletter",
+        "settings": {}
+      }
+    ]
+  }
+  {% endschema %}

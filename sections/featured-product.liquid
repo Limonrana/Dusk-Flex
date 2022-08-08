@@ -14,99 +14,144 @@
 }
 {%- endcapture -%}
 
-<section class="Section Section--spacingNormal" data-section-id="{{ section.id }}" data-section-type="featured-product" data-section-settings='{{ section_settings }}'>
+<section class="py-12" data-section-id="{{ section.id }}" data-section-type="featured-product" data-section-settings='{{ section_settings }}'>
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <!-- Heading -->
-                <h2 class="mb-10 text-center">Top Item of the Week</h2>
+        <!-- heading -->
+        {%- if section.settings.subheading != blank or section.settings.title != blank -%}
+            <div class="row mb-4">
+                <div class="col-lg-12">
+                    {%- if section.settings.subheading != blank -%}
+                        <h6 class="ws--heading ws--h6 mb-5 text-center text-gray-400">
+                            {{ section.settings.subheading | escape }}
+                        </h6>
+                    {%- endif -%}
+                    {%- if section.settings.title != blank -%}
+                        <h2 class="ws--heading ws--h2 mb-10 text-center">
+                            {{ section.settings.title | escape }}
+                        </h2>
+                    {%- endif -%}
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="row align-items-center py-6 px-md-4 bg-white shadow">
-                    <div class="col-12 col-md-6">
-                        <!-- Card -->
-                        <div class="card">
-                            <!-- Badge -->
-                            <div class="badge bg-primary card-badge text-uppercase">
-                                Sale
-                            </div>
-                            <!-- Slider -->
-                            <div class="card-img-top mb-4">
-                                {{- 'product-1' | placeholder_svg_tag -}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <!-- Header -->
-                        <div class="row mb-1">
-                            <div class="col">
-                                <a class="text-muted" href="shop.html">Sneakers</a>
-                            </div>
-                        </div>
-                        <h3 class="mb-2">Leather Sneakers</h3>
-                        <div class="mb-7">
-                            <span class="fs-lg fw-bold text-gray-350 text-decoration-line-through">$115.00</span> 
-                            <span class="ms-1 fs-5 fw-bolder text-primary">$85.00</span>
-                        </div>
-                        <form>
-                            <div class="form-group">
-                                <!-- Label -->
-                                <p class="mb-5">Color: <strong id="colorCaption">White</strong></p>
-                                <div class="mb-8 ms-n1">
-                                    <div class="form-check form-check-inline form-check-img">
-                                        <input checked class="form-check-input" data-target="#colorCaption" data-toggle="form-caption" id="imgRadioOne" name="imgRadio" style="background-image: url(assets/img/products/product-7.jpg);" type="radio" value="White">
-                                    </div>
-                                    <div class="form-check form-check-inline form-check-img">
-                                        <input class="form-check-input" data-target="#colorCaption" data-toggle="form-caption" id="imgRadioTwo" name="imgRadio" style="background-image: url(assets/img/products/product-49.jpg);" type="radio" value="Black">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <!-- Label -->
-                                <p class="mb-5">Size: <strong><span id="sizeCaption">7.5</span> US</strong></p>
-                                <div class="mb-2">
-                                    <div class="form-check form-check-inline form-check-size mb-2">
-                                        <input class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" id="sizeRadioOne" name="sizeRadio" type="radio" value="6"> <label class="form-check-label" for="sizeRadioOne">6</label>
-                                    </div>
-                                    <div class="form-check form-check-inline form-check-size mb-2">
-                                        <input class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" disabled id="sizeRadioTwo" name="sizeRadio" type="radio" value="6.5"> <label class="form-check-label" for="sizeRadioTwo">6.5</label>
-                                    </div>
-                                    <div class="form-check form-check-inline form-check-size mb-2">
-                                        <input class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" id="sizeRadioThree" name="sizeRadio" type="radio" value="7"> <label class="form-check-label" for="sizeRadioThree">7</label>
-                                    </div>
-                                    <div class="form-check form-check-inline form-check-size mb-2">
-                                        <input checked class="form-check-input" data-target="#sizeCaption" data-toggle="form-caption" id="sizeRadioFour" name="sizeRadio" type="radio" value="7.5"> <label class="form-check-label" for="sizeRadioFour">7.5</label>
-                                    </div>
-                                </div><!-- Size chart -->
-                                <p class="mb-8"><img alt="..." class="img-fluid" src="assets/img/icons/icon-ruler.svg"> <a class="text-reset text-decoration-underline ms-3" data-bs-toggle="modal" href="#modalSizeChart">Size chart</a></p>
-                                <div class="row gx-5 mb-7">
-                                    <div class="col-12 col-lg-auto">
-                                        <!-- Quantity -->
-                                        <select class="form-select mb-2">
-                                            <option selected value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-lg">
-                                        <!-- Add to Cart -->
-                                         <button class="btn w-100 btn-dark mb-2" type="submit">Add to Cart</button>
-                                    </div>
-                                    <div class="col-12 col-lg-auto">
-                                        <!-- Buy Now -->
-                                         <button class="btn btn-outline-dark w-100 mb-2" data-toggle="button">Buy Now</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+        {%- endif -%}
+        <!-- heading -->
+        {%- if product != empty -%}
+            <!-- details part Start============-->
+            <div class="ws--featured-product ws--featured-product-center">
+                <!-- product image part-->
+                <a href="{{ product.url }}" class="ws--featured-product-gallery">
+                  <div class="product_large_img">
+                    <img 
+                      src="{{ product.featured_media.preview_image | image_url }}"
+                      data-src="{{ product.featured_media.preview_image | image_url }}"
+                      alt="{{ product.title }}" loading="lazy" class="card-img-top" data-lazy
+                    />
+                  </div>
+                </a>
+                <!-- product image part-->
+                <!-- details part-->
+                <div class="ws--featured-product-details">
+                    <div class="product_details">
+                      <div class="product_details_top">
+                          <!-- title -->
+                          <div class="product_details_title">
+                            {%- if section.settings.show_vendor and product.vendor != blank -%}
+                                <h6 class="ws--heading ws--h6 mb-6 text-gray-400">
+                                  {%- assign vendor_handle = product.vendor | handle -%}
+                                  {%- assign collection_for_vendor = collections[vendor_handle] -%}
+                            
+                                  {%- unless collection_for_vendor.empty? -%}
+                                    <a href="{{ collection_for_vendor.url }}">{{ product.vendor }}</a>
+                                  {%- else -%}
+                                    {{- product.vendor -}}
+                                  {%- endunless -%}
+                                </h6>
+                            {%- endif -%}
+                            <h2 class="ws--heading ws--h2">
+                                <a href="{{ product.url }}">{{ product.title }}</a>
+                            </h2>
+                          </div>
+                        {%- if section.settings.show_sku and product.selected_or_first_available_variant.sku != blank -%}
+                          <p class="ws--heading ws--h6">{{ 'product.form.sku' | t }}: <span class="ws--product-sku-number">{{ product.selected_or_first_available_variant.sku }}</span></p>
+                        {%- endif -%}
+                      </div>
+                      <!-- product_pricing -->
+                      <div class="product_pricing">
+                        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+                          <span class="text-danger">{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+                          <span class="sale-price line-through">{{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}</span>
+                        {%- else -%}
+                          <span class="sale-price">{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+                        {%- endif -%}
+                      </div>
+                      {%- render 'product-form', product: product -%}
                     </div>
                 </div>
             </div>
-        </div>
+            <!-- details part end============-->
+        {%- else -%}
+            <div class="ws--featured-product ws--featured-product-center">
+                <!-- product image part-->
+                <div class="ws--featured-product-gallery">
+                  <div class="product_large_img">
+                      <div class="card-img-top mb-4">
+                          {{- 'product-1' | placeholder_svg_tag -}}
+                      </div>
+                  </div>
+                </div>
+                <!-- product image part-->
+                <!-- details part-->
+                <div class="ws--featured-product-details">
+                  <div class="product_details_top">
+                      <!-- title -->
+                      <div class="product_details_title">
+                          {%- if section.settings.show_vendor -%}
+                              <h6 class="ws--heading ws--h6 mb-6 text-gray-400">
+                                  {{ 'home_page.onboarding.vendor_title' | t }}
+                              </h6>
+                          {%- endif -%}
+                          <h2 class="ws--heading ws--h2">
+                              {{ 'home_page.onboarding.product_title' | t }}
+                          </h2>
+                      </div>
+                  </div>
+                  <!-- product_pricing -->
+                  <div class="product_pricing">
+                      <span class="sale_price">{{ 9500 | money_without_trailing_zeros }}</span>
+                  </div>
+                  <!-- product_color -->
+                  <div class="ws--product-inventory my-5">
+                      {%- if section.settings.show_inventory_quantity -%}
+                        <p class="ws--heading ws--h6 ws--heading-capitalize">
+                          {%- if section.settings.inventory_quantity_threshold == 0 -%}
+                            {{- 'product.form.inventory_quantity_count' | t: count: 5 -}}
+                          {%- else -%}
+                            {{- 'product.form.low_inventory_quantity_count' | t: count: section.settings.inventory_quantity_threshold -}}
+                          {%- endif -%}
+                        </p>
+                      {%- endif -%}
+                  </div>
+                  <!-- product_color -->
+                  <!-- product_quantity -->
+                  <div class="product_quantity">
+                      <div class="product_cart_btn">
+                          <div class="cart_submit_btn">
+                              <button type="submit"  class="ws--btn ws--btn-primary ws--btn-full">
+                                  <span>ADD TO CART</span>
+                                  {%- if section.settings.show_price_in_button -%}
+                                    <span class="ws--btn-separator-dot"></span>
+                                    <span>{{ 9500 | money_without_trailing_zeros }}</span>
+                                  {%- endif -%}
+                              </button>
+                          </div>
+                      </div>
+                      <div class="ws--view-featured-product-btn">
+                        <a href="#">View Product Details</a>
+                      </div>
+                  </div>
+                </div>
+                <!-- details part end============-->
+            </div>
+        {%- endif -%}
     </div>
 </section>
 
