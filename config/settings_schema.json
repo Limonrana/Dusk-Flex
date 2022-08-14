@@ -4,8 +4,8 @@
     "theme_name": "Dawn",
     "theme_version": "6.0.2",
     "theme_author": "Shopify",
-    "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/online-store\/themes",
-    "theme_support_url": "https:\/\/support.shopify.com\/"
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
   },
   {
     "name": "t:settings_schema.colors.name",
@@ -1065,6 +1065,12 @@
       },
       {
         "type": "text",
+        "id": "social_linkedin_link",
+        "info": "https://linkedin.com/in/shopify",
+        "label": "LinkedIn"
+      },
+      {
+        "type": "text",
         "id": "social_tumblr_link",
         "label": "t:settings_schema.social-media.settings.social_tumblr_link.label",
         "info": "t:settings_schema.social-media.settings.social_tumblr_link.info"
@@ -1086,6 +1092,12 @@
         "id": "social_vimeo_link",
         "label": "t:settings_schema.social-media.settings.social_vimeo_link.label",
         "info": "t:settings_schema.social-media.settings.social_vimeo_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_fancy_link",
+        "info": "https://fancy.com/Shopify",
+        "label": "Fancy"
       }
     ]
   },

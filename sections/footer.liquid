@@ -1,0 +1,266 @@
+{%- comment -%}
+--------------------------------------------------------------------------------------------------------------------
+CURRENCY AND LANGUAGE SELECTORS
+--------------------------------------------------------------------------------------------------------------------
+{%- endcomment -%}
+
+{%- if shop.enabled_currencies.size > 1 -%}
+    {%- assign currency_selector = true -%}
+{%- endif -%}
+  
+{%- if shop.published_locales.size > 1 -%}
+    {%- assign locale_selector = true -%}
+{%- endif -%}
+  
+{%- if locale_selector or currency_selector -%}
+    {%- capture location_currency_form -%}
+      {%- form 'localization', id: 'ws_location_currency_form_header', class: 'ws--header-localization-form ws--hidden-pocket ws--hidden-lapptop' -%}
+            <div class="ws--horizontal-list">
+                {%- if currency_selector -%}
+                    <div class="ws--horizontal-list-item">
+                        <input type="hidden" name="currency_code" value="{{ form.current_currency.iso_code }}">
+                        <button type="button" class="ws--select-button d-inline ws-h7" aria-controls="dropdown-popover">
+                            {{ form.current_currency.iso_code }} {% if form.current_currency.symbol %}{{ form.current_currency.symbol }}{% endif %}
+                            {%- render 'icon', icon: 'select-arrow' -%}
+                        </button>
+                        <div id="dropdown-popover" class="ws--popover ws--popover-position-top ws--popover-no-wrap" aria-hidden="true" style="left: 3.5%; bottom: 15%;">
+                            <div class="ws-popover-content">
+                                <div class="ws--popover-value-list ws--popover-value-list-center">
+                                    {%- for currency in form.available_currencies -%}
+                                        <button type="submit" name="currency_code" class="ws--popover-value ws--heading ws--heading-uppercase ws--h6 {% if currency.iso_code == form.current_currency.iso_code %}is-selected{% endif %}"  value="{{ currency.iso_code }}" {% if currency.iso_code == form.current_currency.iso_code %}aria-current="true"{% endif %}>
+                                            {{ currency.iso_code }} {% if currency.symbol %}{{ currency.symbol }}{% endif %}
+                                        </button>
+                                    {%- endfor -%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {%- endif -%}
+                {%- if locale_selector -%}
+                    <div class="ws--horizontal-list-item">
+                        <input type="hidden" name="locale_code" value="{{ form.current_locale.iso_code }}">
+                        <button type="button" class="ws--select-button d-inline ws-h7" aria-controls="dropdown-popover">
+                            {{- form.current_locale.endonym_name -}}
+                            {%- render 'icon', icon: 'select-arrow' -%}
+                        </button>
+                        <div id="dropdown-popover" class="ws--popover ws--popover-small ws--popover-position-top ws--popover-no-wrap" aria-hidden="false">
+                            <div class="ws-popover-content">
+                                <div class="ws--popover-value-list ws--popover-value-list-center">
+                                    {%- for locale in form.available_locales -%}
+                                        <button type="submit" name="locale_code" class="ws--popover-value ws--heading ws--heading-uppercase ws--h6 {% if locale.iso_code == form.current_locale.iso_code %}is-selected{% endif %}" value="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %}>
+                                        {{- locale.endonym_name -}}
+                                        </button>
+                                    {%- endfor -%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {%- endif -%}
+            </div>
+      {%- endform -%}
+    {%- endcapture -%}
+  {%- endif -%}
+
+
+<footer id="section-{{ section.id }}" class="ws--footer {% if section.blocks.size <= 2 %}ws--footer-center{% endif %}">
+    <div class="ws--container">
+        <section class="ws--inner-footer">
+            {%- for block in section.blocks -%}
+                <div class="ws--footer-block ws--footer-{{ block.type }}" {{ block.shopify_attributes }}>
+                    {%- case block.type -%}
+                        {%- when 'text' -%}
+                            {%- if block.settings.title != blank -%}
+                                <h2 class="ws--footer-title ws--heading ws--h6">{{ block.settings.title | escape }}</h2>
+                            {%- endif -%}
+                            {%- if block.settings.content != blank -%}
+                                <div class="ws--footer-content">
+                                    <p class="ws--text">{{ block.settings.content }}</p>
+                                </div>
+                            {%- endif -%}
+                            {%- if block.settings.show_social_media -%}
+                                {% render 'social-media' %}
+                            {%- endif -%}
+
+                        {%- when 'links' -%}
+                            {%- assign linklist = linklists[block.settings.menu] -%}
+            
+                            {%- if linklist != empty -%}
+                                <h2 class="ws--footer-title ws--heading ws--h6">{{ linklist.title | escape }}</h2>
+                                <ul class="ws--link-list">
+                                    {%- for link in linklist.links -%}
+                                        <li class="ws--link-list-item">
+                                            <a href="{{ link.url }}" class="ws--link ws--link-primary ws--link-footer">{{ link.title | escape }}</a>
+                                        </li>
+                                    {%- endfor -%}
+                                </ul>
+                            {%- endif -%}
+
+                        {%- when 'newsletter' -%}
+                            {%- if block.settings.title != blank -%}
+                                <h2 class="ws--footer-title ws--heading ws--h6">{{ block.settings.title | escape }}</h2>
+                            {%- endif -%}
+                            {%- if block.settings.content != blank -%}
+                                <p>
+                                  {{ block.settings.content }}
+                                </p>
+                            {%- endif -%}
+                            <div class="footer-form">
+                                {%- form 'customer', id: 'footer-newsletter', class: 'ws--footer-newsletter' -%}
+                                    {%- if form.posted_successfully? -%}
+                                        <div class="alert alert-success" role="alert">
+                                            {{ 'footer.newsletter.success' | t }}
+                                        </div>
+                                    {%- else -%}
+                                      {%- if form.errors -%}
+                                        <div class="alert alert-success" role="alert">
+                                            {{ form.errors.messages['email'] }}
+                                        </div>
+                                      {%- endif -%}
+                  
+                                      <input type="hidden" name="contact[tags]" value="newsletter">
+                                      <input type="email" name="contact[email]" class="form-control" aria-label="{{ 'footer.newsletter.input' | t }}" placeholder="{{ 'footer.newsletter.input' | t }}" required>
+                                      <button type="submit" class="ws--form-submit-btn ws--btn ws--btn-primary">{{ 'footer.newsletter.submit' | t }}</button>
+                                    {%- endif -%}
+                                {%- endform -%}
+                            </div>
+                    {%- endcase -%}
+                </div>
+            {%- endfor -%}
+        </section>
+        <section class="ws--footer-bottom">
+            <div class="ws--footer-localization">
+                {{ location_currency_form }}
+            </div>
+            <div class="ws--copyright-by">
+                <a href="#" class="ws--footer-store-text ws--heading ws--h6 ws--link ws--link-secondary">&copy; THEME DEVELOPMENT KING</a>
+                <p class="ws--footer-author-text ws--heading ws--h7 mt-2">Powered by Shopify</p>
+            </div>
+            {%- capture payment_methods -%}
+                {%- for type in shop.enabled_payment_types -%}
+                    <li class="ws--horizontal-list-item">{{ type | payment_type_svg_tag }}</li>
+                {%- endfor -%}
+            {%- endcapture -%}
+            <ul class="ws--payment-list ws--horizontal-list">
+                {{ payment_methods }}
+            </ul>
+        </section>
+    </div>
+  </footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "shopify-section--footer",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_payment_methods",
+      "label": "Show payment methods",
+      "info": "Payment method icons are automatically displayed based on your Shopify payment methods.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Currency selector",
+      "info": "To add a currency, go to your [payment settings.](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "Show currency selector",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "Show language selector",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text / social media",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "About the shop"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Text",
+          "default": "<p>Use this text area to tell your customers about your brand and vision. You can change it in the theme settings.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social_media",
+          "label": "Show social media",
+          "info": "Make sure to have properly configured your social media in the theme settings.",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "name": "Links",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "This menu won't show dropdown items."
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Customers who subscribe will have their email address added to the \"accepts marketing\" [customer list](/admin/customers?query=&accepts_marketing=1)."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Newsletter"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Text",
+          "default": "<p>A short sentence describing what someone will receive by subscribing</p>"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "text",
+        "settings": {}
+      },
+      {
+        "type": "links",
+        "settings": {
+          "menu": "footer"
+        }
+      },
+      {
+        "type": "newsletter",
+        "settings": {}
+      }
+    ]
+  }
+}
+{% endschema %}

@@ -6,8 +6,10 @@ document.querySelectorAll('[aria-controls="dropdown-popover"]').forEach(function
         let popover = el.nextElementSibling;
         if (popover.getAttribute('aria-hidden') === 'true') {
             popover.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
         } else {
             popover.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'auto';
         }
     });
 
@@ -17,6 +19,7 @@ document.querySelectorAll('[aria-controls="dropdown-popover"]').forEach(function
             let popover = el.nextElementSibling;
             if (popover.getAttribute('aria-hidden') === 'false' && !popover.contains(e.target)) {
                 popover.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = 'auto';
             }
         }
     });

@@ -65,7 +65,7 @@ CURRENCY AND LANGUAGE SELECTORS
                             {{- form.current_locale.endonym_name -}}
                             {%- render 'icon', icon: 'select-arrow' -%}
                         </button>
-                        <div id="dropdown-popover" class="ws--popover ws--popover-small ws--popover-no-wrap" aria-hidden="false">
+                        <div id="dropdown-popover" class="ws--popover ws--popover-small ws--popover-position-bottom ws--popover-no-wrap" aria-hidden="false">
                             <div class="ws-popover-content">
                                 <div class="ws--popover-value-list ws--popover-value-list-center">
                                     {%- for locale in form.available_locales -%}
@@ -148,7 +148,7 @@ HEADER CONTENT START
                   </button>
                   {%- unless use_sidebar_menu -%}
                       <nav class="ws--header-nav">
-                          <ul class="ws--horizontal-list">
+                          <ul class="ws--horizontal-menu-list">
                               {%- for link in main_menu.links -%}
                                   {% comment %} ======== Mega Mneu Related Content Start ======== {% endcomment %}
                                   {%- assign downcased_link_title = link.title | downcase | strip -%}
@@ -300,7 +300,7 @@ HEADER CONTENT START
                                   {% comment %} ======== Mega Mneu Related Content End ======== {% endcomment %}
 
                                   {% comment %} Main Menu Content push {% endcomment %}
-                                  <li class="ws--horizontal-list-item {% if link.links == blank and link.active %}is-active{% endif %}" {% if menu_item_dropdown != blank %}aria-hasdropdown="true"{% endif %}>
+                                  <li class="ws--horizontal-menu-list-item {% if link.links == blank and link.active %}is-active{% endif %}" {% if menu_item_dropdown != blank %}aria-hasdropdown="true"{% endif %}>
                                       <a class="nav-link ws--heading ws--h5 ws--heading-uppercase" href="{{ link.url }}">
                                           {{- link.title | escape -}}
                                           {%- if use_mega_menu or menu_item_dropdown == blank -%}
